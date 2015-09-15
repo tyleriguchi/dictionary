@@ -20,6 +20,10 @@ You will need the following things properly installed on your computer.
 * `npm install`
 * `bower install`
 
+## Creating Elasticsearch cluster
+Create an app (at)[https://www.openshift.com/]. Scale with web traffic, for the cartridge link to this http://cartreflect-claytondev.rhcloud.com/reflect?github=Asimov4/openshift-elasticsearch-cartridge
+change to max gears
+
 ## Running / Development
 
 * `ember server`
@@ -50,4 +54,3 @@ Specify what it takes to deploy your app.
 * Development Browser Extensions
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
-

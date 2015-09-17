@@ -1,9 +1,8 @@
 
-module.exports = {
+exports.route = {
   method: 'GET',
   path: '/',
   handler: function (request, reply) {
-    console.log('asdf')
     reply('PREPARE YOURSELF');
   }
 };

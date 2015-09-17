@@ -1,16 +1,20 @@
 var request = require('request'),
-    Boom = require('boom');
+    Boom = require('boom'),
+    UUID = require('node-uuid');
 
 exports.route = {
   method: 'POST',
-  path: '/define/{word}',
+  path: '/word',
   handler: function (req, reply) {
-    if (!req.params.word) {
+    var attrs = req.payload.data.attributes;
+
+    if (!attrs.word) {
       Boom.badRequest('invalid query');
     }
+
     var options = {
       method: 'GET',
-      url: process.env.MashapeUrl + '/words/' + req.params.word,
+      url: process.env.MashapeUrl + '/words/' + attrs.word,
       accept: 'application/json',
       'Content-type': 'application/json',
       json: true,
@@ -18,21 +22,20 @@ exports.route = {
         'X-Mashape-Key': process.env.MashapeKey
       }
     }
+
     request(options, function(err, res) {
       if (err) {
         Boom.badRequest(err);
       }
       var definitionsArray = res.body.results.map(function(item) {
-        console.log('item', item)
         return {
-          type: 'define',
-          data: item
+          type: 'definition',
+          id: UUID.v4(),
+          attributes: item
         }
       })
 
-      console.log('body', definitionsArray)
-
-      return reply(definitionsArray)
+      return reply({ data: definitionsArray })
     })
   }
 }

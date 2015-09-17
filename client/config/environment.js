@@ -20,7 +20,7 @@ module.exports = function(environment) {
   };
 
   ENV.contentSecurityPolicy = {
-    'connect-src': "'self' https://auth.firebase.com wss://*.firebaseio.com https://dictionary-tyleriguchi.rhcloud.com"
+    'connect-src': "'self' http://localhost:3000 https://auth.firebase.com wss://*.firebaseio.com https://dictionary-tyleriguchi.rhcloud.com"
   }
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;

@@ -24,9 +24,16 @@ exports.route = {
     }
 
     request(options, function(err, res) {
+
       if (err) {
-        Boom.badRequest(err);
+        return reply(Boom.badRequest(err));
       }
+
+      // throw error if null or undefined
+      if (res.body.results == null) {
+        return reply(Boom.notFound('No definition found'))
+      }
+
       var definitionsArray = res.body.results.map(function(item) {
         return {
           type: 'definition',
@@ -35,6 +42,12 @@ exports.route = {
         }
       })
 
+      // push the original word into the payload
+      definitionsArray.push({
+        type: 'word',
+        id: UUID.v4(),
+        attributes: attrs
+      })
       return reply({ data: definitionsArray })
     })
   }

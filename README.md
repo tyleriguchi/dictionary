@@ -1,7 +1,6 @@
 # Dictionary
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+A place to upload interesting words that you can't ever seem to remember. It'll give you the dictionary definition and allow you to upload your own definition to be able to actually remember what the word means. Will be able to search through both dictionary definitions and your own definition when in need. Built on Ember and Hapi.js.
 
 ## Prerequisites
 

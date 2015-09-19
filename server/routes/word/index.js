@@ -36,32 +36,21 @@ exports.route = {
       }
 
       var definitionsArray = res.body.results.map(function(item) {
-        return {
-          type: 'definition',
-          id: UUID.v4(),
-          attributes: item
-        }
+        item.id = UUID.v4();
+        item.type ='definition';
+        return item;
       })
 
-      relationshipsArray = _.map(definitionsArray, function(obj) {
-        return _.pick(obj, 'type', 'id')
-      })
-      console.log('res', relationshipsArray);
+      attrs.definitions = definitionsArray;
 
       var returnPayload = {
         data: {
           type: 'word',
           id: UUID.v4(),
           attributes: attrs,
-          relationships: {
-            definition: {
-              data: relationshipsArray
-            }
-          },
-          included: definitionsArray
         }
       }
-      console.log('pay', returnPayload)
+
       return reply(returnPayload);
     })
   }

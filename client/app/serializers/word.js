@@ -2,11 +2,14 @@ import DS from 'ember-data';
 
 export default DS.JSONAPISerializer.extend({
   normalizeSingleResponse: function(store, primaryModelClass, payload, id, requestType) {
-    // // push in the definitions array from the response from the server
-    // payload.data.forEach( (definition) => {
-    //   store.push(definition);
-    // })
+    // convert the definitions object to an ember object
+    let definitions = payload.data.attributes.definitions;
+    let convertedDefinitions = definitions.map( (item) => {
+      return Ember.Object.create(item);
+    })
 
-    return this._super(...arguments);
+    payload.data.attributes.definitions = convertedDefinitions;
+
+    return payload
   },
 });

@@ -1,6 +1,7 @@
 var request = require('request'),
     Boom = require('boom'),
-    UUID = require('node-uuid');
+    UUID = require('node-uuid'),
+    _ = require('lodash');
 
 exports.route = {
   method: 'POST',
@@ -42,13 +43,26 @@ exports.route = {
         }
       })
 
-      // push the original word into the payload
-      definitionsArray.push({
-        type: 'word',
-        id: UUID.v4(),
-        attributes: attrs
+      relationshipsArray = _.map(definitionsArray, function(obj) {
+        return _.pick(obj, 'type', 'id')
       })
-      return reply({ data: definitionsArray })
+      console.log('res', relationshipsArray);
+
+      var returnPayload = {
+        data: {
+          type: 'word',
+          id: UUID.v4(),
+          attributes: attrs,
+          relationships: {
+            definition: {
+              data: relationshipsArray
+            }
+          },
+          included: definitionsArray
+        }
+      }
+      console.log('pay', returnPayload)
+      return reply(returnPayload);
     })
   }
 }

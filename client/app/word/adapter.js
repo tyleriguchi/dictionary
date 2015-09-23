@@ -1,4 +1,4 @@
-import ApplicationAdapter from './application';
+import ApplicationAdapter from '../adapters/application';
 
 export default ApplicationAdapter.extend({
   pathForType() {

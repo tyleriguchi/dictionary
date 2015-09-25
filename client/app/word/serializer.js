@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 
 export default DS.JSONAPISerializer.extend({
   normalizeSingleResponse: function(store, primaryModelClass, payload, id, requestType) {
@@ -8,8 +9,8 @@ export default DS.JSONAPISerializer.extend({
       return Ember.Object.create(item);
     })
 
-    payload.data.attributes.definitions = convertedDefinitions;
-
+    // create a proxy array to be able to access those nice ember features
+    payload.data.attributes.definitions = Ember.ArrayProxy.create({'content': Ember.A(convertedDefinitions)});
     return payload
   },
 });

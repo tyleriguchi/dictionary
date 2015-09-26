@@ -7,7 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('words');
-  this.route('add-word');
+  this.route('define');
 });
 
 export default Router;

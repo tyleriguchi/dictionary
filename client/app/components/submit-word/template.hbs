@@ -1,5 +1,8 @@
 <form {{action 'submitWord' on='submit'}}>
-  <label for='wordInput'>Input</label>
-  <input value={{word}} type='text' id='wordInput' oninput={{action "wordInputChanged" value="target.value"}}>
+  <label for='wordInput' for='wordInput'>Input</label>
+  <input value={{word}} type='text' id='wordInput' oninput={{action "inputChanged" value="target.value"}}>
+  {{#if error}}
+    <span>{{error}}</span>
+  {{/if}}
   <button type='submit'>Submit</button>
 </form>

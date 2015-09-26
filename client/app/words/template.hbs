@@ -1,6 +1,8 @@
 {{#each model as |word|}}
+  <h3>{{word.word}}</h3>
+  <ol>
   {{#each word.definitions as |definition index|}}
-    <p>{{starts-at-one index}}: {{definition.definition}}</p>
-    <br>
+    <li>{{definition.definition}}</li>
   {{/each}}
+  </ol>
 {{/each}}

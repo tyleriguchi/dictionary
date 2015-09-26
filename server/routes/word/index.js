@@ -1,5 +1,5 @@
 var request = require('request'),
-    Boom = require('boom'),
+    Boom = require('../../lib/Ember-boom'),
     UUID = require('node-uuid'),
     _ = require('lodash');
 
@@ -9,10 +9,10 @@ exports.route = {
   handler: function (req, reply) {
     var attrs = req.payload.data.attributes;
 
-    if (!attrs.word) {
-      Boom.badRequest('invalid query');
+    if (attrs.word == null || attrs.word === '') {
+      return reply(Boom.badRequest('Please enter a word'));
     }
-
+    console.log('eh', attrs.word == null)
     var options = {
       method: 'GET',
       url: process.env.MashapeUrl + '/words/' + attrs.word,

@@ -3,9 +3,11 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   actions: {
     saveWord(word) {
-      return this.store.createRecord('word', {
+      let record = this.store.createRecord('word', {
         word: word
-      }).save();
+      });
+
+      return [record, record.save()]
     },
     wordSaved() {
       this.transitionToRoute('words')

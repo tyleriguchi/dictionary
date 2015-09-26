@@ -1,0 +1,13 @@
+@import 'bower_components/bootstrap-sass/assets/stylesheets/_bootstrap';
+
+html, body {
+  min-height: 100%;
+
+  > .ember-view {
+    min-height: 100%;
+  }
+}
+
+body {
+  padding-top: 50px;
+}

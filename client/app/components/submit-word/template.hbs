@@ -1,8 +1,16 @@
 <form {{action 'submitWord' on='submit'}}>
-  <label for='wordInput' for='wordInput'>Input</label>
-  <input value={{word}} type='text' id='wordInput' oninput={{action "inputChanged" value="target.value"}}>
-  {{#if error}}
-    <span>{{error}}</span>
-  {{/if}}
-  <button type='submit'>Submit</button>
+  <div class='form-group {{if error "has-error"}}'>
+    <label class='{{if error "text-danger" "sr-only"}}' for='wordInput'>
+      {{if error error 'Word'}}
+    </label>
+
+    <input oninput={{action "inputChanged" value="target.value"}}
+           value={{word}}
+           class='form-control'
+           placeholder='Search for a word'
+           type='text'
+           id='wordInput' />
+  </div>
+
+  <button class='btn btn-primary' type='submit'>Submit</button>
 </form>

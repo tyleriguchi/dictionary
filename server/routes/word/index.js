@@ -12,7 +12,7 @@ exports.route = {
     if (attrs.word == null || attrs.word === '') {
       return reply(Boom.badRequest('Please enter a word'));
     }
-    console.log('eh', attrs.word == null)
+
     var options = {
       method: 'GET',
       url: process.env.MashapeUrl + '/words/' + attrs.word,
@@ -46,7 +46,7 @@ exports.route = {
       var returnPayload = {
         data: {
           type: 'word',
-          id: UUID.v4(),
+          id: attrs.word,
           attributes: attrs,
         }
       }

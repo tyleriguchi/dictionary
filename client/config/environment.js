@@ -22,6 +22,19 @@ module.exports = function(environment) {
   ENV.contentSecurityPolicy = {
     'connect-src': "'self' http://localhost:3000 https://auth.firebase.com wss://*.firebaseio.com https://dictionary-tyleriguchi.rhcloud.com"
   }
+
+  ENV['simple-auth'] = {
+    authorizer: 'simple-auth-authorizer:jwt',
+    authenticationRoute: 'index',
+    routeAfterAuthentication: 'define',
+    routeIfAlreadyAuthenticated: 'words'
+  }
+
+  ENV['auth0-ember-simple-auth'] = {
+    clientID: "kwEeFUjKqRaNo1kLJjEV8uij1PY5zLIR",
+    domain: "tyler-iguchi.auth0.com"
+  }
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;

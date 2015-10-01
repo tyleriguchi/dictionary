@@ -7,9 +7,9 @@ export default Ember.Controller.extend({
         word: word
       });
 
-      return [record, record.save()]
+      return [record, record.save()];
     },
-    wordSaved() {
+    transitionOut() {
       this.transitionToRoute('words')
     }
   }

@@ -6,7 +6,7 @@ export default Ember.Component.extend({
       let [record, recordSave] = this.attrs.saveWord(this.get('word'));
 
       recordSave.then( () => {
-        this.sendAction('wordSaved');
+        this.sendAction('transitionOut');
       })
       .catch ( (err) => {
         this.set('error', err.errors[0].detail);

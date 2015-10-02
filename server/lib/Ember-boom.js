@@ -7,6 +7,7 @@ EmberBoom = _.cloneDeep(Boom);
 var formatBoom = function(boomRequest, message, data) {
   var Boomed = Boom[boomRequest](message, data);
   var payload = Boomed.output.payload;
+  console.log('a', payload)
   Boomed.output.payload = formatPayload(payload);
 
   return Boomed;
@@ -31,4 +32,9 @@ EmberBoom.badRequest = function(message, data) {
 EmberBoom.notFound = function(message, data) {
   return formatBoom('notFound', message, data)
 }
+
+EmberBoom.badImplementation = function(message, data) {
+  return formatBoom('badImplementation', message, data)
+}
+
 module.exports = EmberBoom;

@@ -14,10 +14,12 @@ server.connection({
 server.realm.modifiers.route.prefix = '/api/v1';
 
 var indexRoute = require('./routes/index').route;
-var defineRoute = require('./routes/word/index').route;
+var defineGetRoute = require('./routes/word/get').route;
+var definePostRoute = require('./routes/word/post').route;
 
 server.route(indexRoute);
-server.route(defineRoute);
+server.route(defineGetRoute);
+server.route(definePostRoute);
 
 server.start(function () {
     console.log('Server running at:', server.info.uri);

@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.2.4",
-    "boom": "^2.8.0",
+    "boom": "^2.9.0",
     "hapi": "^10.0.0",
     "hoek": "^2.16.2",
     "local-dynamo": "^0.1.2",

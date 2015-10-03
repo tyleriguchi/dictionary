@@ -7,7 +7,7 @@ EmberBoom = _.cloneDeep(Boom);
 var formatBoom = function(boomRequest, message, data) {
   var Boomed = Boom[boomRequest](message, data);
   var payload = Boomed.output.payload;
-  console.log('a', payload)
+  
   Boomed.output.payload = formatPayload(payload);
 
   return Boomed;

@@ -13,7 +13,7 @@ var dynamoDbOptions =  {
 // var awsClient = new AWS.DynamoDB(dynamoDbOptions);
 var DynamoDB = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
 
-exports.route = {
+module.exports = {
   method: 'POST',
   path: '/word',
   handler: function (req, reply) {
@@ -71,8 +71,8 @@ exports.route = {
           },
         }, function dynamoResponse(err, data) {
           if (err){
-            console.log('err', err)
-            return reply(Boom.badImplementation('ugh'));
+            console.log('dynamoDB put Error', err);
+            return reply(Boom.badImplementation('dyanmoDb put error'));
           }
           else {
             return reply(returnPayload);

@@ -13,9 +13,9 @@ server.connection({
 
 server.realm.modifiers.route.prefix = '/api/v1';
 
-var indexRoute = require('./routes/index').route;
-var defineGetRoute = require('./routes/word/get').route;
-var definePostRoute = require('./routes/word/post').route;
+var indexRoute = require('./routes/index');
+var defineGetRoute = require('./routes/word/get');
+var definePostRoute = require('./routes/word/post');
 
 server.route(indexRoute);
 server.route(defineGetRoute);

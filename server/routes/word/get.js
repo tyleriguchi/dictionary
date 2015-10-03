@@ -13,7 +13,7 @@ var dynamoDbOptions =  {
 
 var docClient = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
 
-exports.route = {
+module.exports = {
   method: 'GET',
   path: '/word',
   handler: function(req, reply) {

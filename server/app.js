@@ -17,9 +17,12 @@ var indexRoute = require('./routes/index');
 var defineGetRoute = require('./routes/word/get');
 var definePostRoute = require('./routes/word/post');
 
-server.route(indexRoute);
-server.route(defineGetRoute);
-server.route(definePostRoute);
+server.route(require('./routes/index'));
+server.route(require('./routes/word/get'));
+server.route(require('./routes/word/post'));
+server.route(require('./routes/user/get'));
+server.route(require('./routes/user/post'));
+server.route(require('./routes/users/get'));
 
 server.start(function () {
     console.log('Server running at:', server.info.uri);

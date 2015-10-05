@@ -1,5 +1,5 @@
 var request = require('request'),
-    Boom    = require('../../lib/Ember-boom'),
+    Boom    = require('../../libs/Ember-boom'),
     UUID    = require('node-uuid'),
     _       = require('lodash'),
     AWS     = require('aws-sdk');
@@ -11,7 +11,7 @@ var dynamoDbOptions =  {
 };
 
 // var awsClient = new AWS.DynamoDB(dynamoDbOptions);
-var DynamoDB = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
+var dynamo = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
 
 module.exports = {
   method: 'POST',
@@ -63,7 +63,7 @@ module.exports = {
       }
 
       if (attrs['is-authenticated'] === true) {
-        DynamoDB.put({
+        dynamo.put({
           TableName: 'dictionary',
           Item: {
            id: attrs.word,

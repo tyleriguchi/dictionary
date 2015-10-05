@@ -1,5 +1,5 @@
 var request = require('request'),
-    Boom    = require('../../lib/Ember-boom'),
+    Boom    = require('../../libs/Ember-boom'),
     UUID    = require('node-uuid'),
     _       = require('lodash'),
     AWS     = require('aws-sdk');
@@ -11,13 +11,13 @@ var dynamoDbOptions =  {
   region: 'us-west-2'
 };
 
-var docClient = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
+var dynamo = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
 
 module.exports = {
   method: 'GET',
   path: '/word',
   handler: function(req, reply) {
-    docClient.scan({
+    dynamo.scan({
       TableName: 'dictionary',
     }, function(err, result) {
       if (err) {

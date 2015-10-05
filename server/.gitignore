@@ -1,4 +1,7 @@
 .DS_Store
 /node_modules
-
 npm-debug.log
+
+db/migrations/*.js
+!db/migrations/
+!db/migrations/default_user_migration.js

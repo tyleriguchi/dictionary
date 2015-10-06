@@ -1,23 +1,34 @@
 var request = require('request'),
     Boom    = require('../../libs/Ember-boom'),
-    UUID    = require('node-uuid'),
     _       = require('lodash'),
-    AWS     = require('aws-sdk');
-
-
-var dynamoDbOptions =  {
-  apiVersion: '2012-08-10',
-  endpoint:  'http://localhost:4567',
-  region: 'us-west-2'
-};
-
-var dynamo = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
+    User    = require('../../models/user').User;
 
 module.exports = {
   method: 'GET',
   path: '/users/{user}',
   handler: function(req, reply) {
-    console.log('req', req.params.user)
-    return reply('ok')
+    User.where({id: req.params.user}).fetch().then(function(user) {
+      if (user) {
+        console.log('user', user.attributes)
+        var formattedData = {
+          data: {
+            type: 'user',
+            id: user.id,
+            attributes: {
+              email: user.attributes.email,
+              // why ember data, why
+              'created-at': user.attributes.created_at
+            }
+          }
+        }
+        return reply(formattedData);
+      }
+      else {
+        return reply(Boom.notFound('User not found'));
+      }
+    })
+    .catch(function(err) {
+      return reply(Boom.badImplementation('Error fetching model'));
+    })
   }
 }

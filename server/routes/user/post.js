@@ -2,16 +2,7 @@ var request = require('request'),
     Boom    = require('../../libs/Ember-boom'),
     UUID    = require('node-uuid'),
     _       = require('lodash'),
-    AWS     = require('aws-sdk');
-
-
-var dynamoDbOptions =  {
-  apiVersion: '2012-08-10',
-  endpoint:  'http://localhost:4567',
-  region: 'us-west-2'
-};
-
-var dynamo = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
+    User    = require('../../models/user').User;
 
 module.exports = {
   method: 'POST',
@@ -19,18 +10,20 @@ module.exports = {
   handler: function(req, reply) {
     var data = req.payload.data;
 
-    console.log(req.payload)
-    dynamo.put({
-      TableName: 'dictionary',
-      Item: data,
-    }, function dynamoResponse(err, data) {
-      if (err){
-        console.log('dynamoDB put Error', err);
-        return reply(Boom.badImplementation('dyanmoDb put error'));
-      }
-      else {
-        return reply(returnPayload);
-      }
-    });
+    User.forge({
+      id: data.id,
+      email: data.attributes.email,
+      created_at: data.attributes['created-at'] || new Date(),
+    })
+    // knex tries to update an entry when supplied a primary key,
+    // so we gotta tell it to insert it
+    .save(null, {method: 'insert'})
+    .then(function() {
+      return reply().code(204);
+    })
+    .catch(function(err) {
+      console.log('err', err)
+      return reply(Boom.badImplementation(err));
+    })
   }
 }

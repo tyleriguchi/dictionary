@@ -3,7 +3,7 @@ var request = require('request'),
     UUID    = require('node-uuid'),
     _       = require('lodash'),
     AWS     = require('aws-sdk'),
-    User    = require('../../models/user');
+    User    = require('../../models/user').User;
 
 
 var dynamoDbOptions =  {
@@ -19,8 +19,11 @@ module.exports = {
   path: '/users',
   handler: function(req, reply) {
     User.fetchAll().then(function(users) {
-      console.log('ser', users)
-      reply(users);
+      return reply(users);
+    })
+    .catch(function(err) {
+      console.log('users get server error', err);
+      return reply(Boom.badImplementation);
     })
   }
 }

@@ -23,6 +23,7 @@ server.route(require('./routes/word/post'));
 server.route(require('./routes/user/get'));
 server.route(require('./routes/user/post'));
 server.route(require('./routes/users/get'));
+// server.route(require('./routes/users/post'));
 
 server.start(function () {
     console.log('Server running at:', server.info.uri);

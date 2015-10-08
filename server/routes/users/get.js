@@ -3,7 +3,7 @@ var request = require('request'),
     UUID    = require('node-uuid'),
     _       = require('lodash'),
     AWS     = require('aws-sdk'),
-    User    = require('../../models/user').User;
+    User    = require('../../models/user');
 
 
 var dynamoDbOptions =  {

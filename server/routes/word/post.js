@@ -2,23 +2,14 @@ var request = require('request'),
     Boom    = require('../../libs/Ember-boom'),
     UUID    = require('node-uuid'),
     _       = require('lodash'),
-    AWS     = require('aws-sdk');
-
-var dynamoDbOptions =  {
-  apiVersion: '2012-08-10',
-  endpoint:  'http://localhost:4567',
-  region: 'us-west-2'
-};
-
-// var awsClient = new AWS.DynamoDB(dynamoDbOptions);
-var dynamo = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
+    Word    = require('../../models/word');
 
 module.exports = {
   method: 'POST',
   path: '/word',
   handler: function (req, reply) {
     var attrs = req.payload.data.attributes;
-
+    console.log('req', req.payload)
     if (attrs.word == null || attrs.word === '') {
       return reply(Boom.badRequest('Please enter a word'));
     }
@@ -63,6 +54,17 @@ module.exports = {
       }
 
       if (attrs['is-authenticated'] === true) {
+        Word.forge({
+          id: attrs.word,
+          definitions: definitionsArray
+          user: attrs.relationships.user.data.id
+        })
+        // knex tries to update an entry when supplied a primary key,
+        // so we gotta tell it to insert it
+        .save(null, {method: 'insert'})
+        .then(function() {
+          return reply().code(204);
+        })
         dynamo.put({
           TableName: 'dictionary',
           Item: {

@@ -1,14 +1,10 @@
 var Bookshelf = require('../libs/Bookshelf');
 var Words = require('./word');
 
-exports.User = Bookshelf.Model.extend({
+module.exports = Bookshelf.Model.extend({
   tableName: 'users',
-  
+
   words: function() {
-    return this.hasMany(Words);
+    return this.hasMany(Words, 'word_id');
   }
 });
-
-// exports.Users = Bookshelf.Collection.extend({
-//   model: User
-// })

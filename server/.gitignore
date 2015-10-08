@@ -4,3 +4,4 @@ npm-debug.log
 
 db/migrations/*.js
 !db/migrations/default_user_migration.js
+!db/migrations/default_word_migration.js

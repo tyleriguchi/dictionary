@@ -1,7 +1,7 @@
 var request = require('request'),
     Boom    = require('../../libs/Ember-boom'),
     _       = require('lodash'),
-    User    = require('../../models/user').User;
+    User    = require('../../models/user');
 
 module.exports = {
   method: 'GET',

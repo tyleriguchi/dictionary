@@ -16,26 +16,28 @@ export default Base.extend({
       console.log('err', err)
       if (err.errors[0].detail === "User not found") {
         return this.get('store').createRecord('user', {
-          id: data.profile.user_id.split('|')[1],
+          id: userId,
           email: data.profile.email,
           createdAt: data.profile.created_at,
         }).save().then ( () => {
           return Ember.RSVP.resolve(data)
         }).catch( (err) => {
-          // Error on signup, blow up auth0 user to allow them to reuse email
-          return ajax({
-            method: 'DELETE',
-            url: 'https://tyler-iguchi.auth0.com/api/users/' + encodeURI(data.profile.user_id),
-            headers: {
-              "Authorization": 'Bearer ' + 'yYS9KTdPlC3id1QLtEwZrZU5AAar1Gi7dIfHkQJcA6oCUQvxvUIz4QffsSLmZON3'
-            }
-          })
-          .then( () => {
-            return Ember.RSVP.reject(err);
-          })
-          .catch ( (auth0Error) => {
-            return Ember.RSVP.reject(auth0Error);
-          })
+          return Ember.RSVP.reject(err)
+          // TODO delete user account on auth0 in error, so they can reuse their email
+          // can't figure out how to get proper permisions to delete a user
+          // return ajax({
+          //   method: 'DELETE',
+          //   url: 'https://tyler-iguchi.auth0.com/api/users/' + encodeURI(data.profile.user_id),
+          //   headers: {
+          //     "Authorization": 'Bearer ' + data.jwt
+          //   }
+          // })
+          // .then( () => {
+          //   return Ember.RSVP.reject(err);
+          // })
+          // .catch ( (auth0Error) => {
+          //   return Ember.RSVP.reject(auth0Error);
+          // })
         })
       }
       else {

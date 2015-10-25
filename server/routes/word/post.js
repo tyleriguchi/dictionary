@@ -6,12 +6,6 @@ var request = require('request'),
     Word    = require('../../models/word'),
     User    = require('../../models/user');
 
-var dynamoDbOptions =  {
-  apiVersion: '2012-08-10',
-  endpoint:  'http://localhost:4567',
-  region: 'us-west-2'
-};
-
 module.exports = {
   method: 'POST',
   path: '/word',

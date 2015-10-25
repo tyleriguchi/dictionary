@@ -5,15 +5,6 @@ var request = require('request'),
     AWS     = require('aws-sdk'),
     User    = require('../../models/user');
 
-
-var dynamoDbOptions =  {
-  apiVersion: '2012-08-10',
-  endpoint:  'http://localhost:4567',
-  region: 'us-west-2'
-};
-
-var dynamo = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
-
 module.exports = {
   method: 'GET',
   path: '/users',

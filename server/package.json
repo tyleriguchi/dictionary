@@ -9,7 +9,6 @@
   "author": "tyleriguchi",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.2.4",
     "boom": "^2.9.0",
     "hapi": "^10.0.0",
     "hoek": "^2.16.2",

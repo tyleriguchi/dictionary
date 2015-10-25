@@ -1,4 +1,7 @@
 var Hapi = require('hapi');
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017m/dictionary');
 
 var server = new Hapi.Server();
 

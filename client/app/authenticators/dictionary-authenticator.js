@@ -9,8 +9,14 @@ export default Base.extend({
     console.log('data', data)
     const userId = data.profile.user_id.split('|')[1];
 
-    return this.get('store').findRecord('user', userId).then( (response) => {
-      return Ember.RSVP.resolve(data);
+    return this.get('store').findRecord('user', userId).then( (user) => {
+      console.log('what', user)
+      return user.get('words').then( (words) => {
+        return Ember.RSVP.resolve(data);
+      })
+      .catch( (err) => {
+        return Ember.RSVP.reject(err);
+      })
     })
     .catch( (err) => {
       console.log('err', err)

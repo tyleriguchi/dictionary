@@ -2,22 +2,16 @@ var request = require('request'),
     Boom    = require('../../libs/Ember-boom'),
     UUID    = require('node-uuid'),
     _       = require('lodash'),
-    AWS     = require('aws-sdk');
-
-var dynamoDbOptions =  {
-  apiVersion: '2012-08-10',
-  endpoint:  'http://localhost:4567',
-  region: 'us-west-2'
-};
-
-// var awsClient = new AWS.DynamoDB(dynamoDbOptions);
-var dynamo = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
+    AWS     = require('aws-sdk'),
+    Word    = require('../../models/word'),
+    User    = require('../../models/user');
 
 module.exports = {
   method: 'POST',
   path: '/word',
   handler: function (req, reply) {
     var attrs = req.payload.data.attributes;
+    var userId = req.payload.data.relationships.user.data.id;
 
     if (attrs.word == null || attrs.word === '') {
       return reply(Boom.badRequest('Please enter a word'));
@@ -62,22 +56,37 @@ module.exports = {
         }
       }
 
-      if (attrs['is-authenticated'] === true) {
-        dynamo.put({
-          TableName: 'dictionary',
-          Item: {
-           id: attrs.word,
-           definitions: attrs.definitions,
-          },
-        }, function dynamoResponse(err, data) {
-          if (err){
-            console.log('dynamoDB put Error', err);
-            return reply(Boom.badImplementation('dyanmoDb put error'));
+      if (userId) {
+        User.findById(userId, function(userFindError, foundUser) {
+          console.log('found', foundUser)
+          if (userFindError) {
+            return reply(Boom.badImplementation(userFindError));
           }
-          else {
-            return reply(returnPayload);
-          }
-        });
+
+          var word = new Word({
+            _id: UUID.v4(),
+            word: attrs.word,
+            definitions: attrs.definitions,
+            user_id: req.payload.data.relationships.user.data.id
+          })
+
+          foundUser.words.push(word._id);
+
+          foundUser.save(function(userSaveError) {
+            if (userSaveError) {
+              return reply(Boom.badImplementation(userSaveError));
+            }
+            word.save(function(err, data) {
+              if (err){
+                console.log('word save error', err);
+                return reply(Boom.badImplementation('dyanmoDb put error'));
+              }
+              else {
+                return reply(returnPayload);
+              }
+            })
+          })
+        })
       }
 
       else {

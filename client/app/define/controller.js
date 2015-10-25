@@ -9,17 +9,23 @@ export default Ember.Controller.extend({
       let user;
 
       if (isAuthenticated) {
-        user = this.store.peekRecord('user', this.get('session.secure.profile.identities')[0].user_id)
-      }
+        user = this.store.peekRecord('user', this.get('session.secure.profile.identities')[0].user_id);
+        console.log('user', user)
+        let wordRecord = this.store.createRecord('word', {
+          word: word,
+          user: user
+        });
 
-      // console.log('user', userId)
-      let record = this.store.createRecord('word', {
-        word: word,
-        isAuthenticated: isAuthenticated,
-        user: isAuthenticated ? user : null
-      });
-      
-      return [record, record.save()];
+        user.get('words').pushObject(wordRecord);
+        return [wordRecord, wordRecord.save()];
+      }
+      else {
+        let wordRecord = this.store.createRecord('word', {
+          word: word,
+        });
+
+        return [wordRecord, wordRecord.save()];
+      }
     },
     transitionOut() {
       this.transitionToRoute('words')

@@ -1,14 +1,18 @@
-var Bookshelf = require('../libs/Bookshelf');
-var Words = require('./word');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-exports.User = Bookshelf.Model.extend({
-  tableName: 'users',
-  
-  words: function() {
-    return this.hasMany(Words);
-  }
+// create a schema
+var userSchema = new Schema({
+  _id: String,
+  email: String,
+  created_at: Date,
+  updated_at: Date,
+  words: [String],
 });
 
-// exports.Users = Bookshelf.Collection.extend({
-//   model: User
-// })
+// the schema is useless so far
+// we need to create a model using it
+var User = mongoose.model('User', userSchema);
+
+// make this available to our users in our Node applications
+module.exports = User;

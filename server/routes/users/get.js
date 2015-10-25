@@ -3,16 +3,7 @@ var request = require('request'),
     UUID    = require('node-uuid'),
     _       = require('lodash'),
     AWS     = require('aws-sdk'),
-    User    = require('../../models/user').User;
-
-
-var dynamoDbOptions =  {
-  apiVersion: '2012-08-10',
-  endpoint:  'http://localhost:4567',
-  region: 'us-west-2'
-};
-
-var dynamo = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
+    User    = require('../../models/user');
 
 module.exports = {
   method: 'GET',

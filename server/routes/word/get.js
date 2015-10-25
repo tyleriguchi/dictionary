@@ -2,30 +2,43 @@ var request = require('request'),
     Boom    = require('../../libs/Ember-boom'),
     UUID    = require('node-uuid'),
     _       = require('lodash'),
-    AWS     = require('aws-sdk');
-
-
-var dynamoDbOptions =  {
-  apiVersion: '2012-08-10',
-  endpoint:  'http://localhost:4567',
-  region: 'us-west-2'
-};
-
-var dynamo = new AWS.DynamoDB.DocumentClient(dynamoDbOptions);
+    Word    = require('../../models/word');
 
 module.exports = {
   method: 'GET',
-  path: '/word',
+  path: '/word/{word}',
   handler: function(req, reply) {
-    dynamo.scan({
-      TableName: 'dictionary',
-    }, function(err, result) {
+    var wordId = req.params.word
+    Word.findById(wordId, function(err, word) {
       if (err) {
-        console.log(err)
-        return reply(err)
+        console.log('err', err)
+        return reply(Boom.notFound('User not found'));
       }
-      console.log('re', result)
-      return reply(result)
-    });
+      if (word) {
+        console.log('word', word)
+        var formattedWordData = {
+          data: {
+            type: 'word',
+            id: word.id,
+            attributes: {
+              word: word.word,
+              definitions: word.definitions,
+              // why ember data, why
+              'created-at': word.created_at
+            },
+            relationships: {
+              data: {
+                type: 'user',
+                id: word.user_id
+              }
+            }
+          }
+        }
+        return reply(formattedWordData);
+      }
+      else {
+        return reply(Boom.notFound('Word not found'));
+      }
+    })
   }
 }

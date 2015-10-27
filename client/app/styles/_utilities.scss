@@ -1,0 +1,19 @@
+
+.capitalize-first-letter {
+  display: inline-block; //needed to capitalize first letter, thanks css
+  &:first-letter {
+    text-transform: capitalize;
+  }
+}
+
+.list-offset {
+  margin-left: 1em;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.m-md-t {
+  margin-top: $md-margin;
+}

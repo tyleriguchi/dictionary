@@ -2,7 +2,6 @@ var request = require('request'),
     Boom    = require('../../libs/Ember-boom'),
     UUID    = require('node-uuid'),
     _       = require('lodash'),
-    AWS     = require('aws-sdk'),
     User    = require('../../models/user');
 
 module.exports = {

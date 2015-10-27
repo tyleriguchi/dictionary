@@ -20,14 +20,18 @@ module.exports = function(environment) {
   };
 
   ENV.contentSecurityPolicy = {
-    'connect-src': "'self' http://localhost:3000 https://auth.firebase.com wss://*.firebaseio.com https://dictionary-tyleriguchi.rhcloud.com https://tyler-iguchi.auth0.com"
+    'font-src': "'self' data: https://*.auth0.com",
+    'style-src': "'self' 'unsafe-inline'",
+    'script-src': "'self' 'unsafe-eval' https://*.auth0.com",
+    'img-src': '*.gravatar.com *.wp.com data:',
+    'connect-src': "'self' http://localhost:3000 https://tyler-iguchi.auth0.com"
   }
 
   ENV['simple-auth'] = {
     authorizer: 'simple-auth-authorizer:jwt',
     authenticationRoute: 'index',
-    routeAfterAuthentication: 'define',
-    routeIfAlreadyAuthenticated: 'words'
+    routeAfterAuthentication: 'words',
+    // routeIfAlreadyAuthenticated: 'words'
   }
 
   ENV['auth0-ember-simple-auth'] = {

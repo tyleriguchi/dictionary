@@ -2,7 +2,6 @@ var request = require('request'),
     Boom    = require('../../libs/Ember-boom'),
     UUID    = require('node-uuid'),
     _       = require('lodash'),
-    AWS     = require('aws-sdk'),
     Word    = require('../../models/word'),
     User    = require('../../models/user');
 
@@ -11,7 +10,14 @@ module.exports = {
   path: '/word',
   handler: function (req, reply) {
     var attrs = req.payload.data.attributes;
-    var userId = req.payload.data.relationships.user.data.id;
+    var userId;
+
+    try {
+      userId = req.payload.data.relationships.user.data.id;
+    }
+    catch(e) {
+      userId = null;
+    }
 
     if (attrs.word == null || attrs.word === '') {
       return reply(Boom.badRequest('Please enter a word'));

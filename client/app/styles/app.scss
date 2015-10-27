@@ -1,4 +1,8 @@
+@import '_variables';
+@import '_theme';
 @import 'bower_components/bootstrap-sass/assets/stylesheets/_bootstrap';
+@import '_utilities';
+@import 'components/_word-definition';
 
 html, body {
   min-height: 100%;

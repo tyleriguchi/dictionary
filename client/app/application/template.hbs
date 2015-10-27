@@ -1,7 +1,7 @@
 <header class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      {{#link-to 'index' class='navbar-brand'}}Dictionary{{/link-to}}
+      {{#link-to 'words' class='navbar-brand'}}Dictionary{{/link-to}}
 
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
         <span class="icon-bar"></span>
@@ -12,14 +12,29 @@
 
     <ul class='nav navbar-nav navbar-right'>
       <li>
+        {{#link-to 'define'}}Define{{/link-to}}
+      </li>
+      <li>
+        {{#link-to 'words'}}My Words{{/link-to}}
+      </li>
+      <li>
         {{#if session.isAuthenticated}}
-          <a {{ action 'invalidateSession' }}>Logout</a>
+          <a class='pointer' {{ action 'invalidateSession' }}>Logout</a>
         {{else}}
-          <a {{ action 'sessionRequiresAuthentication' }}>Login</a>
+          <a class='pointer' {{ action 'sessionRequiresAuthentication' }}>Sign Up / Login</a>
         {{/if}}
       </li>
     </ul>
   </div>
 </header>
 
+{{#unless session.isAuthenticated}}
+  <div class='container'>
+    <div class='row'>
+      <div class='col-xs-12 m-md-t'>
+        <span>Log in or sign up to save your words!</span>
+      </div>
+    </div>
+  </div>
+{{/unless}}
 {{outlet}}

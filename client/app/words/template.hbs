@@ -1,8 +1,32 @@
-{{#each model as |word|}}
-  <h3>{{word.word}}</h3>
-  <ol>
-  {{#each word.definitions as |definition index|}}
-    <li>{{definition.definition}}</li>
-  {{/each}}
-  </ol>
-{{/each}}
+<div class='container'>
+  <div class='row'>
+    <div class='col-xs-12'>
+      {{#each model as |word|}}
+        <h4 class='list-offset capitalize-first-letter'>{{word.word}}</h4>
+        <ol class='word-definition'>
+        {{#each word.definitions as |definition index|}}
+          <li>
+              <span class='capitalize-first-letter'>{{definition.definition}}.</span>
+              <span><em>{{shorten-part-of-speech definition.partOfSpeech}}</em></span>
+
+            {{#if definition.synonyms}}
+              <div>
+                <span>Synonyms:&nbsp;</span><span class='capitalize-first-letter'>{{synonym-helper definition.synonyms}}.</span>
+              </div>
+            {{/if}}
+
+            {{#if definition.examples}}
+              <div>
+                <span>Example:&nbsp;</span><span class='capitalize-first-letter'>{{definition.examples}}.</span>
+              </div>
+            {{/if}}
+          </li>
+          <br>
+        {{/each}}
+        </ol>
+      {{else}}
+        {{#link-to 'define'}}Go define a word!{{/link-to}}
+      {{/each}}
+    </div>
+  </div>
+</div>

@@ -11,13 +11,24 @@ You will need the following things properly installed on your computer.
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
+* MongoDB
 
 ## Installation
 
 * `git clone <repository-url>` this repository
 * change into the new directory
+
+## Client
+* enter into client directory
 * `npm install`
 * `bower install`
+* `ember serve`
+
+## Server
+* enter into server directory
+* `npm install`
+* in a separate terminal window, type `mongod`
+* In server directory, type `grunt` to run server
 
 ## Creating Elasticsearch cluster
 Create an app (at)[https://www.openshift.com/]. Scale with web traffic, for the cartridge link to this http://cartreflect-claytondev.rhcloud.com/reflect?github=Asimov4/openshift-elasticsearch-cartridge

@@ -23,6 +23,7 @@ var definePostRoute = require('./routes/word/post');
 server.route(require('./routes/index'));
 server.route(require('./routes/word/get'));
 server.route(require('./routes/word/post'));
+server.route(require('./routes/word/delete'));
 server.route(require('./routes/user/get'));
 server.route(require('./routes/user/post'));
 server.route(require('./routes/users/get'));

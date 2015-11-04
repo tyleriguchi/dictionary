@@ -57,7 +57,6 @@ module.exports = {
       var returnPayload = {
         data: {
           type: 'word',
-          id: attrs.word,
           attributes: attrs,
         }
       }
@@ -69,8 +68,10 @@ module.exports = {
             return reply(Boom.badImplementation(userFindError));
           }
 
+          var wordId = UUID.v4();
+
           var word = new Word({
-            _id: UUID.v4(),
+            _id: wordId,
             word: attrs.word,
             definitions: attrs.definitions,
             user_id: req.payload.data.relationships.user.data.id
@@ -88,6 +89,7 @@ module.exports = {
                 return reply(Boom.badImplementation('dyanmoDb put error'));
               }
               else {
+                returnPayload.data.id = wordId;
                 return reply(returnPayload);
               }
             })
